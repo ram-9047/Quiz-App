@@ -46,28 +46,4 @@ router.post("/login", (req, res, next) => {
   });
 });
 
-// User login
-// router.post("/login", (req, res, next) => {
-//   let email = req.body.email;
-//   let password = req.body.password;
-//   User.findOne({ email }, (err, user) => {
-//     if (err) return next(err);
-//     if (!user) return res.json({ message: "Invalid Email", success: false });
-//     if (!password)
-//       return res.json({ message: "Invalid Password", success: false });
-//     jwt.sign(
-//       {
-//         // userId: user._id,
-//         email: user.email,
-//         username: user.username
-//       },
-//       "mango",
-//       (err, token) => {
-//         if (err) return next(err);
-//         res.json({ message: "user is logged in", success: true, token });
-//       }
-//     );
-//   });
-// });
-
 module.exports = router;

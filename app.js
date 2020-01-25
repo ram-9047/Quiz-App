@@ -46,9 +46,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use("*", indexRouter);
-app.use("/users", usersRouter);
-app.use("/admin", adminRouter);
-app.use("/quiz", quizzesRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/quiz", quizzesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

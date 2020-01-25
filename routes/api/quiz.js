@@ -33,13 +33,16 @@ router.put("/:id", (req, res, next) => {
 router.delete("/:id"),
   (req, res, next) => {
     let id = req.params.id;
-    Quiz.findByIdAndDelete(id, req, body, (err, deleteQuiz) => {
+    console.log(id);
+    Quiz.findByIdAndDelete(id, req.body, (err, deleteQuiz) => {
+      console.log(deleteQuiz, "delete item");
       if (err) return next(err);
       if (!deleteQuiz)
         return res
           .status(400)
           .json({ message: "no quiz found", success: false });
-      res.status(200).json({ deleteQuiz, success: true });
+      if (deleteQuiz)
+        return res.status(200).json({ deleteQuiz, success: true });
     });
   };
 module.exports = router;
