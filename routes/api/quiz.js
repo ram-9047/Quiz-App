@@ -2,6 +2,27 @@ const express = require("express");
 const router = express.Router();
 const Quiz = require("../../models/Quiz.js");
 
+//get all quizes
+
+router.get("/", function(req, res, next) {
+  console.log("quiz here");
+  Quiz.find((err, quiz) => {
+    if (err) return next(err);
+    if (!quiz) return res.json({ message: "no quiz found", success: false });
+    res.json({ quiz, success: true });
+  });
+});
+
+//get single quiz
+
+router.get("/:id", (req, res, next) => {
+  const id = req.params.id;
+  Quiz.findById(id, (err, quiz) => {
+    if (err) return next(err);
+    res.json(quiz);
+  });
+});
+
 //create quiz
 router.post("/create-quiz", function(req, res, next) {
   console.log(req.body, "inside crate quiz route");
@@ -40,4 +61,5 @@ router.delete("/:id", (req, res, next) => {
     if (deleteQuiz) return res.status(200).json({ deleteQuiz, success: true });
   });
 });
+
 module.exports = router;
