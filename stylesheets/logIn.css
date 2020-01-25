@@ -1,0 +1,120 @@
+.wrapper {
+  width: 70%;
+  height: 80vh;
+  margin-left: 14rem;
+  background-color: aliceblue;
+  margin-top: 4rem;
+}
+
+.hero-section {
+  /* background-color: blueviolet; */
+  /* background: linear-gradient(to top left, #282c3e, #f35c59); */
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+.intro-section {
+  width: 50%;
+  height: 97.1%;
+  background-color: #f35c59;
+  font-family: "Josefin Sans", sans-serif;
+}
+.intro-section div {
+  background-color: #f56662;
+  margin-left: 5rem;
+}
+.intro-section h2 {
+  font-family: "Montserrat", sans-serif;
+  color: whitesmoke;
+  font-weight: 400;
+  margin-top: 0;
+  padding: 4rem 8rem;
+}
+.intro-section h3 {
+  font-weight: 200;
+  color: whitesmoke;
+  font-size: 1.8rem;
+  margin-bottom: 0;
+  margin-top: 8rem;
+  margin-left: 12rem;
+}
+.intro-section p {
+  font: 200;
+  color: whitesmoke;
+  font-size: 0.9rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 16rem;
+}
+.login-section {
+  width: 50%;
+  height: 97.1%;
+  background-color: #282c3e;
+  font-family: "Quicksand", sans-serif;
+}
+.login-section h2 {
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: whitesmoke;
+  margin-top: 14rem;
+  margin-left: 4rem;
+}
+
+input {
+  width: 99.9%;
+  padding: 1.2rem 0;
+  border: none;
+  outline: none;
+  border-top: 0.001cm solid white;
+  border-bottom: 0.001cm solid white;
+  background-color: transparent;
+  box-sizing: border-box;
+  padding-left: 2.5rem;
+  color: whitesmoke;
+  font-size: 1rem;
+}
+
+.input-box {
+  width: 100%;
+}
+.fas {
+  width: 20px;
+  position: absolute;
+  margin-top: 1.3rem;
+  margin-left: 1.4rem;
+}
+.login-btn {
+  font-size: small;
+  margin-top: 2rem;
+  margin-left: 0;
+  color: #f35c59;
+  background-color: transparent;
+  border: 1px solid #f35c59;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  outline: none;
+  border-left-width: 0px;
+  box-sizing: border-box;
+  padding: 0.8rem 4rem;
+}
+.login-btn:hover {
+  color: #282c3e;
+  background-color: #f35c59;
+}
+.forget-password-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f35c59;
+  margin-left: 2rem;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+.forget-password-btn:hover {
+  background-color: #f35c59;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  color: #282c3e;
+  box-sizing: border-box;
+  padding: 0.8rem 2.5rem;
+}
