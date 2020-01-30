@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Quiz = require("../../models/Quiz.js");
+const { verifyAdmin } = require("../../modules/auth");
 
+router.use(verifyAdmin);
 //get all quizes
 
 router.get("/", function(req, res, next) {
@@ -24,7 +26,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 //create quiz
-router.post("/create-quiz", function(req, res, next) {
+router.post("/create", function(req, res, next) {
   console.log(req.body, "inside crate quiz route");
   Quiz.create(req.body, (err, createdQuiz) => {
     if (err) return next(err);
@@ -42,7 +44,7 @@ router.post("/create-quiz", function(req, res, next) {
 
 router.put("/:id", (req, res, next) => {
   let id = req.params.id;
-  Quiz.findByIdAndUpdate(id, req.body, (err, editedQuiz) => {
+  Quiz.findByIdAndUpdate(id, req.body, { new: true }, (err, editedQuiz) => {
     if (err) return next(err);
     if (!editedQuiz)
       return res.status(400).json({ message: "no quiz found", success: false });

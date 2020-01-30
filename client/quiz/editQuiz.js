@@ -4,29 +4,25 @@ import "../../stylesheets/quiz.css";
 
 class Quiz extends React.Component {
   state = {
+    quiz: [],
     question: null,
-
-    a: null,
-    b: null,
-    c: null,
-    d: null,
-
+    options: {
+      a: null,
+      b: null,
+      c: null,
+      d: null
+    },
     correctAnswer: null
   };
-
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
 
-  createQuiz = event => {
-    event.preventDefault();
-    fetch("http://localhost:3000/api/v1/quiz/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+  editQuiz = () => {
+    fetch(`http://localhost:3000/api/v1/quiz/${this.props.id}`, {
+      method: "PUT",
       body: JSON.stringify({
         question: this.state.question,
         options: {
@@ -40,18 +36,17 @@ class Quiz extends React.Component {
     })
       .then(res => res.json())
       .then(quiz => {
-        console.log(quiz);
         if (quiz.success) {
-          this.props.history.push("/admin/dashboard");
         }
       });
   };
+
   render() {
     return (
       <>
         <div className="quiz">
-          <span>Create Quiz</span>
-          <form onSubmit={this.createQuiz}>
+          <span>Edit Quiz</span>
+          <form onSubmit={this.editQuiz}>
             <input
               type="text"
               className="create-quiz-input"
@@ -96,7 +91,7 @@ class Quiz extends React.Component {
               name="correctAnswer"
               onChange={this.handleChange}
             ></input>
-            <button type="submit">submit</button>
+            <button type="submit">Update</button>
           </form>
         </div>
       </>

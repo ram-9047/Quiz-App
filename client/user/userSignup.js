@@ -26,7 +26,7 @@ class Signup extends React.Component {
                 <p>A place to gain knowledge</p>
               </div>
               <div className="login-section">
-                <h2>LogIn to your Account</h2>
+                <h2>Signup</h2>
                 <Link to="/user/sign-in">
                   <h3>Already have an account</h3>
                 </Link>
@@ -38,6 +38,7 @@ class Signup extends React.Component {
                     name="email"
                     value={this.state.email}
                     onChange={this.handleChange}
+                    className="input"
                   ></input>
                 </div>
                 <div>
@@ -48,6 +49,7 @@ class Signup extends React.Component {
                     name="username"
                     value={this.state.username}
                     onChange={this.handleChange}
+                    className="input"
                   ></input>
                 </div>
                 <div>

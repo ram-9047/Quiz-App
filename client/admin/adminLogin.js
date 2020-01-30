@@ -17,7 +17,7 @@ class UserLogIn extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-    fetch("http://localhost:3000/admin/login", {
+    fetch("http://localhost:3000/api/v1/admin/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -56,6 +56,7 @@ class UserLogIn extends React.Component {
                   name="email"
                   value={this.state.email}
                   onChange={this.handleChange}
+                  className="input"
                 ></input>
               </div>
               <div>
@@ -66,6 +67,7 @@ class UserLogIn extends React.Component {
                   name="password"
                   value={this.state.password}
                   onChange={this.handleChange}
+                  className="input"
                 ></input>
               </div>
               <button className="login-btn" onClick={this.handleSignIn}>

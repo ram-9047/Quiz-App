@@ -54,6 +54,7 @@ class UserLogIn extends React.Component {
                   name="email"
                   value={this.state.email}
                   onChange={this.handleChange}
+                  className="input"
                 ></input>
               </div>
               <div>
@@ -64,6 +65,7 @@ class UserLogIn extends React.Component {
                   name="password"
                   value={this.state.password}
                   onChange={this.handleChange}
+                  className="input"
                 ></input>
               </div>
               <button className="login-btn" onClick={this.handleSignIn}>

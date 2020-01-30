@@ -60,15 +60,19 @@
   border-radius: 10px;
   outline: none;
   margin-left: 1rem;
+  /* box-sizing: border-box; */
 }
 .edit-btn:hover {
-  border: none;
-  background-color: rgb(3, 80, 245);
-  color: aliceblue;
+  border: 0.5px solid whitesmoke;
+  color: rgb(3, 80, 245);
+  /* color: aliceblue; */
 }
 .del-btn:hover {
-  border: none;
+  border: 0.5px solid whitesmoke;
 
-  background-color: red;
-  color: black;
+  /* border: none; */
+  /* background-color: red; */
+  background: transparent;
+  /* color: black; */
+  color: red;
 }
