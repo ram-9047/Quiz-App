@@ -45,10 +45,10 @@ if (process.env.NODE_ENV === "development") {
   app.use(require("webpack-hot-middleware")(compiler));
 }
 
-app.use("*", indexRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/quiz", quizzesRouter);
+app.use("*", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

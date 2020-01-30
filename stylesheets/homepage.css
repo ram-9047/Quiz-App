@@ -1,0 +1,33 @@
+.body {
+  /* background: linear-gradient(to right, #282c3e, whitesmoke); */
+  background: linear-gradient(to right, #f35c59, #282c3e);
+  height: 100vh;
+}
+h1 {
+  font-size: 10rem;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 200;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+.button {
+  margin-top: 3rem;
+  font-size: 5rem;
+  font-weight: 100;
+  padding: 1rem 6rem;
+  border: none;
+  outline: none;
+}
+.button:hover {
+  background-color: cornsilk;
+}
+.admin-btn {
+  margin-left: 25%;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+.user-btn {
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}

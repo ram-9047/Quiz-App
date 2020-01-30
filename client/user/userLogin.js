@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../stylesheets/LogIn.css";
 
 class UserLogIn extends React.Component {
@@ -42,6 +43,9 @@ class UserLogIn extends React.Component {
             </div>
             <div className="login-section">
               <h2>LogIn to your Account</h2>
+              <Link to="/user/sign-up">
+                <h3>Need an account</h3>
+              </Link>
               <div className="input-box">
                 <i className="fas fa-user"></i>
                 <input

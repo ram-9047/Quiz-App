@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class Signup extends React.Component {
   constructor() {
@@ -26,6 +27,9 @@ class Signup extends React.Component {
               </div>
               <div className="login-section">
                 <h2>LogIn to your Account</h2>
+                <Link to="/user/sign-in">
+                  <h3>Already have an account</h3>
+                </Link>
                 <div className="input-box">
                   <i className="fas fa-user"></i>
                   <input

@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
 
-//get all quizzes.
+//get all users.
 
 router.get("/", (req, res, next) => {
   User.find({}, (err, user) => {

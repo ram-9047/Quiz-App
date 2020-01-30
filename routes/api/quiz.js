@@ -28,8 +28,9 @@ router.post("/create-quiz", function(req, res, next) {
   console.log(req.body, "inside crate quiz route");
   Quiz.create(req.body, (err, createdQuiz) => {
     if (err) return next(err);
-    if (!createdQuiz)
+    if (!createdQuiz) {
       return res.status(400).json({ message: "no quiz found", success: false });
+    }
     if (createdQuiz) {
       console.log(createdQuiz, "created quiz");
       res.status(200).json({ createdQuiz, success: true });

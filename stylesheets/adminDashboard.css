@@ -1,0 +1,74 @@
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.dashboard {
+  border: 1px solid blue;
+}
+.dashboard span {
+  font-size: 2.5rem;
+  padding: 1rem;
+  font-weight: 100;
+  font-family: "Josefin Sans", sans-serif;
+}
+.nav-bar {
+  text-decoration: none;
+  font-size: 1.8rem;
+  padding: 1.2rem;
+  font-weight: lighter;
+  font-family: "Josefin Sans", sans-serif;
+}
+.nav-bar :any-link {
+  text-decoration: none;
+  margin-left: 1.2rem;
+  color: black;
+}
+.nav-bar :hover {
+  color: darkturquoise;
+}
+.question-list {
+  /* max-width: 70%; */
+
+  text-align: center;
+}
+.question-list h3 {
+  font-size: 3rem;
+  font-weight: 100;
+  font-family: "Josefin Sans", sans-serif;
+}
+.question-box {
+  position: relative;
+
+  font-size: 1rem;
+  /* margin-left: 10%; */
+  margin-top: 1rem;
+}
+.question-box p {
+  font-size: 1.4rem;
+  margin: 0.3rem 0;
+}
+.question-box span {
+  margin-left: 0.5rem;
+}
+.question-box-btn {
+  margin-top: 0.5rem;
+}
+.edit-btn {
+  font-size: 1rem;
+  background: transparent;
+  border: 0.5px solid red;
+  border-radius: 10px;
+  outline: none;
+  margin-left: 1rem;
+}
+.edit-btn:hover {
+  border: none;
+  background-color: rgb(3, 80, 245);
+  color: aliceblue;
+}
+.del-btn:hover {
+  border: none;
+
+  background-color: red;
+  color: black;
+}
