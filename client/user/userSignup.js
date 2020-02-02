@@ -36,7 +36,7 @@ class Signup extends React.Component {
               </div>
               <div className="login-section">
                 <h2>Signup</h2>
-                <Link to="/user/sign-in">
+                <Link to="/user/signin">
                   <h3>Already have an account</h3>
                 </Link>
                 <div className="input-box">

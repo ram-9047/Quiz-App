@@ -16,7 +16,8 @@ import Profile from "./profile/profile.js";
 class App extends React.Component {
   state = {
     quiz_id: null,
-    user: null
+    user: null,
+    isLoggedIn: false
   };
 
   editQuiz = id => {
@@ -35,6 +36,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(user => {
         if (user.success) {
+          this.setState({ isLoggedIn: true });
           this.setState({ user });
         }
       });
@@ -51,35 +53,42 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route path="/" exact component={Homepage} />
-            <Route path="/user/sign-in">
+            <Route path="/user/signin">
               <UserLogin getLoggedUser={this.getLoggedUser} />
             </Route>
-            <Route path="/user/sign-up" component={UserSignup} />
-            <Route path="/admin/sign-in">
+            <Route path="/user/signup" component={UserSignup} />
+            <Route path="/admin/signin">
               <AdminLogin getLoggedUser={this.getLoggedUser} />
             </Route>
-            <Route path="/admin/sign-up" component={AdminSignup} />
+            <Route path="/admin/signup" component={AdminSignup} />
             <Route path="/dashboard">
               <Dashboard
                 editQuiz={this.editQuiz}
+                isLoggedIn={this.state.isLoggedIn}
                 isAdmin={this.state.user && this.state.user.user.isAdmin}
               />
             </Route>
             <Route
-              path={"/create-quiz"}
+              path={"/create"}
               component={
                 this.state.user && this.state.user.user.isAdmin ? Quizzes : ""
               }
             />
             <Route path="/edit">
               {this.state.user && this.state.user.user.isAdmin ? (
-                <EditQuiz id={this.state.quiz_id} />
+                <EditQuiz
+                  id={this.state.quiz_id}
+                  isLoggedIn={this.state.isLoggedIn}
+                />
               ) : (
                 ""
               )}
             </Route>
             <Route path="/profile">
-              <Profile user={this.state.user} />
+              <Profile
+                user={this.state.user}
+                isLoggedIn={this.state.isLoggedIn}
+              />
             </Route>
           </Switch>
         </BrowserRouter>

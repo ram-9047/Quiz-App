@@ -52,7 +52,7 @@ class AdminLogIn extends React.Component {
             </div>
             <div className="login-section">
               <h2>LogIn to your Account</h2>
-              <Link to="/admin/sign-up">
+              <Link to="/admin/signup">
                 <h3>Need an account</h3>
               </Link>
               <div className="input-box">

@@ -43,18 +43,14 @@ class adminDashboard extends React.Component {
   };
 
   render() {
-    console.log(this.props.isAdmin);
-    return (
+    console.log(this.props.isLoggedIn);
+    return this.props.isLoggedIn ? (
       <>
         <div className="flex dashboard">
           <span>Quiz App</span>
           <span>Score : {this.state.score}</span>
           <nav className="nav-bar">
-            {this.props.isAdmin ? (
-              <Link to="/create-quiz">Create Quiz</Link>
-            ) : (
-              ""
-            )}
+            {this.props.isAdmin ? <Link to="/create">Create Quiz</Link> : ""}
 
             <Link to="/profile">Profile</Link>
           </nav>
@@ -127,6 +123,8 @@ class adminDashboard extends React.Component {
             ))}
         </div>
       </>
+    ) : (
+      ""
     );
   }
 }
