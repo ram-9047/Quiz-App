@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Quiz = require("../../models/Quiz.js");
+const Quiz = require("../../models/Question.js");
 const { verifyAdmin } = require("../../modules/auth");
 
-router.use(verifyAdmin);
+// router.use(verifyAdmin);
 //get all quizes
 
 router.get("/", function(req, res, next) {

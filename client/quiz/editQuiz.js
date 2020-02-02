@@ -3,17 +3,20 @@ import { withRouter } from "react-router-dom";
 import "../../stylesheets/quiz.css";
 
 class Quiz extends React.Component {
-  state = {
-    quiz: [],
-    question: null,
-    options: {
-      a: null,
-      b: null,
-      c: null,
-      d: null
-    },
-    correctAnswer: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      singleQuiz: [],
+      question: null,
+      options: {
+        a: null,
+        b: null,
+        c: null,
+        d: null
+      },
+      correctAnswer: null
+    };
+  }
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -40,8 +43,16 @@ class Quiz extends React.Component {
         }
       });
   };
+  getSingleQuestionById = () => {
+    fetch(`http://localhost:3000/api/v1/quiz/${this.props.id}`)
+      .then(res => res.json())
+      .then(singleQuiz => this.setState({ singleQuiz }));
+  };
 
   render() {
+    {
+      () => this.getSingleQuestionById(this.props.id);
+    }
     return (
       <>
         <div className="quiz">

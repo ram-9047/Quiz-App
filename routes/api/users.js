@@ -17,7 +17,7 @@ router.get("/", (req, res, next) => {
 router.post("/signup", function(req, res, next) {
   console.log(req.body, "inside signup route");
   User.create(req.body, (err, user) => {
-    // console.log(err, user);
+    console.log(err, user);
     if (err) return next(err);
     if (!user)
       return res.status(401).json({ message: "No User Found", success: false });
@@ -43,8 +43,9 @@ router.post("/login", (req, res, next) => {
         .json({ message: "Invalid Password", success: false });
     jwt.sign(
       {
-        // userId: user._id,
-        email: user.email
+        email: user.email,
+        userid: user._id,
+        username: user.username
       },
       "mango",
       (err, token) => {

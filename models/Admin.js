@@ -23,19 +23,15 @@ const AdminSchema = new Schema({
   }
 });
 AdminSchema.pre("save", function(next) {
-  if (this.password && this.isModified("password")) {
-    bcrypt.hash(this.password, 10, (err, password) => {
-      if (err) return next(err);
-      this.password = password;
-      next();
-    });
+  if (this.password) {
+    const salt = bcrypt.genSaltSync(10);
+    this.password = bcrypt.hashSync(this.password, salt);
   }
+  next();
 });
-AdminSchema.methods.verifyPassword = function(password, done) {
-  bcrypt.compare(password, this.password, (err, matched) => {
-    if (err) return done(null, false);
-    done(null, matched);
-  });
+
+AdminSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
 };
 
 module.exports = mongoose.model("Admin", AdminSchema);

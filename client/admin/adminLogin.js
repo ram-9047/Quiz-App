@@ -1,10 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "../../stylesheets/LogIn.css";
 
-class UserLogIn extends React.Component {
-  constructor() {
-    super();
+class AdminLogIn extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = { email: "", password: "" };
   }
 
@@ -27,11 +27,18 @@ class UserLogIn extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        if (data.success) {
+          // console.log(data);
+          // console.log(data.authToken);
+          localStorage.setItem("token", data.authToken);
+          this.props.getLoggedUser();
+          this.props.history.push("/dashboard");
+        }
       });
   };
 
   render() {
+    console.log(this.props.getLoggedUser);
     return (
       <div>
         <div className="wrapper">
@@ -82,4 +89,4 @@ class UserLogIn extends React.Component {
   }
 }
 
-export default UserLogIn;
+export default withRouter(AdminLogIn);

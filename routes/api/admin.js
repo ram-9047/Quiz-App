@@ -28,16 +28,29 @@ router.post("/login", function(req, res, next) {
       return res
         .status(400)
         .json({ message: "No admin found", success: false });
-    jwt.sign(
-      {
-        email: admin.email
-      },
-      "mango",
-      (err, token) => {
-        if (err) return next(err);
-        res.status(200).json({ message: "admin is logged in ", success: true });
-      }
-    );
+    const isAuthenticated = admin.comparePassword(password);
+    if (isAuthenticated) {
+      jwt.sign(
+        {
+          email: admin.email,
+          userid: admin._id,
+          username: admin.username
+        },
+        "mango",
+        (err, token) => {
+          if (err) return next(err);
+          if (token) {
+            res.status(200).json({
+              message: "admin is logged in ",
+              success: true,
+              authToken: token
+            });
+          }
+        }
+      );
+    } else {
+      res.status(403).json({ message: "Incorrect password", success: false });
+    }
   });
 });
 module.exports = router;

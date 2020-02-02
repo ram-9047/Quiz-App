@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "../../stylesheets/LogIn.css";
 
 class UserLogIn extends React.Component {
@@ -17,7 +17,7 @@ class UserLogIn extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-    fetch("http://localhost:3000/users/login", {
+    fetch("http://localhost:3000/api/v1/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -27,7 +27,12 @@ class UserLogIn extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        if (data.success) {
+          console.log(data);
+          localStorage.setItem("token", data.token);
+          this.props.getLoggedUser();
+          this.props.history.push("/dashboard");
+        }
       });
   };
 
@@ -80,4 +85,4 @@ class UserLogIn extends React.Component {
   }
 }
 
-export default UserLogIn;
+export default withRouter(UserLogIn);

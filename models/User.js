@@ -19,21 +19,17 @@ const UserSchema = new Schema({
     default: false
   }
 });
+
 UserSchema.pre("save", function(next) {
-  if (this.password && this.isModified("password")) {
-    bcrypt.hash(this.password, 10, (err, password) => {
-      if (err) return next(err);
-      this.password = password;
-      next;
-    });
-  } else {
-    next();
+  if (this.password) {
+    const salt = bcrypt.genSaltSync(10);
+    this.password = bcrypt.hashSync(this.password, salt);
   }
+  next();
 });
-UserSchema.methods.verifyPassword = function(password, done) {
-  bcrypt.compare(password, this.password, (err, matched) => {
-    if (err) return done(null, false);
-    done(null, matched);
-  });
+
+UserSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
 };
+
 module.exports = mongoose.model("User", UserSchema);

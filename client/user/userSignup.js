@@ -10,9 +10,19 @@ class Signup extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   handleSignUp = () => {
-    let email = this.state.email;
-    let password = this.state.password;
-    let username = this.state.username;
+    let userData = {
+      email: this.state.email,
+      password: this.state.password,
+      username: this.state.username
+    };
+    fetch("http://localhost:3000/api/v1/users/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify(userData)
+    });
   };
   render() {
     return (
@@ -21,7 +31,6 @@ class Signup extends React.Component {
           <div className="wrapper">
             <div className="hero-section">
               <div className="intro-section">
-                <div>{/* <h2>QuizApp</h2> */}</div>
                 <h3>Welcome to Quiz App</h3>
                 <p>A place to gain knowledge</p>
               </div>
@@ -60,10 +69,11 @@ class Signup extends React.Component {
                     name="password"
                     value={this.state.password}
                     onChange={this.handleChange}
+                    className="input"
                   ></input>
                 </div>
                 <button className="login-btn" onClick={this.handleSignUp}>
-                  LogIn
+                  Signup
                 </button>
               </div>
             </div>

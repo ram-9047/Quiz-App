@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class Signup extends React.Component {
+class UserSignup extends React.Component {
   constructor() {
     super();
     this.state = { email: "", password: "", username: "" };
@@ -10,9 +10,21 @@ class Signup extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   handleSignUp = () => {
-    let email = this.state.email;
-    let password = this.state.password;
-    let username = this.state.username;
+    let admin = {
+      email: this.state.email,
+      password: this.state.password,
+      username: this.state.username
+    };
+    fetch("http://localhost:3000/api/v1/admin/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify(admin)
+    });
+    // .then(res => res.json())
+    // .then(resData => console.log(resData));
   };
   render() {
     return (
@@ -28,7 +40,7 @@ class Signup extends React.Component {
                 <p>A place to gain knowledge</p>
               </div>
               <div className="login-section">
-                <h2>LogIn to your Account</h2>
+                <h2>Signup</h2>
                 <Link to="/admin/sign-in">
                   <h3>Already have an account</h3>
                 </Link>
@@ -62,6 +74,7 @@ class Signup extends React.Component {
                     name="password"
                     value={this.state.password}
                     onChange={this.handleChange}
+                    className="input"
                   ></input>
                 </div>
                 <button className="login-btn" onClick={this.handleSignUp}>
@@ -75,4 +88,4 @@ class Signup extends React.Component {
     );
   }
 }
-export default Signup;
+export default UserSignup;
