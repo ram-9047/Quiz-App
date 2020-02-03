@@ -6,19 +6,8 @@ import "../../stylesheets/dashboard.css";
 
 class adminDashboard extends React.Component {
   state = {
-    // quizzes: null,
     score: null
   };
-
-  // getQuiz = () => {
-  //   fetch("http://localhost:3000/api/v1/quiz")
-  //     .then(res => res.json())
-  //     .then(quiz => {
-  //       if (quiz.success) {
-  //         this.setState({ quizzes: quiz.quiz });
-  //       }
-  //     });
-  // };
 
   componentDidMount() {
     this.props.dispatch(fetchQuizzes());
