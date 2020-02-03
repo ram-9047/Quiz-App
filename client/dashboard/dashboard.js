@@ -34,7 +34,7 @@ class adminDashboard extends React.Component {
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return this.props.isLoggedIn ? (
       <>
         <div className="flex dashboard">
@@ -94,7 +94,7 @@ class adminDashboard extends React.Component {
                       <Link to="/edit">
                         <button
                           className="edit-btn"
-                          onClick={() => this.props.editQuiz(quiz._id)}
+                          onClick={() => this.props.editQuiz(quiz)}
                         >
                           edit
                         </button>

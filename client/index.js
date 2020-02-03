@@ -17,14 +17,14 @@ import Profile from "./profile/profile.js";
 
 class App extends React.Component {
   state = {
-    quiz_id: null,
+    question: null,
     user: null,
     isLoggedIn: false
   };
 
-  editQuiz = id => {
+  editQuiz = question => {
     this.setState({
-      quiz_id: id
+      question
     });
   };
 
@@ -49,7 +49,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.user);
+    // console.log(this.state.question);
     return (
       <>
         <BrowserRouter>
@@ -79,7 +79,7 @@ class App extends React.Component {
             <Route path="/edit">
               {this.state.user && this.state.user.user.isAdmin ? (
                 <EditQuiz
-                  id={this.state.quiz_id}
+                  question={this.state.question}
                   isLoggedIn={this.state.isLoggedIn}
                 />
               ) : (

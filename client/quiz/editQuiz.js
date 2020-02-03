@@ -8,12 +8,10 @@ class Quiz extends React.Component {
     this.state = {
       singleQuiz: [],
       question: null,
-      options: {
-        a: null,
-        b: null,
-        c: null,
-        d: null
-      },
+      a: null,
+      b: null,
+      c: null,
+      d: null,
       correctAnswer: null
     };
   }
@@ -23,9 +21,30 @@ class Quiz extends React.Component {
     });
   };
 
-  editQuiz = () => {
-    fetch(`http://localhost:3000/api/v1/quiz/${this.props.id}`, {
+  componentDidMount() {
+    fetch(`http://localhost:3000/api/v1/quiz/${this.props.question._id}`, {
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(quiz => {
+        this.setState({
+          question: quiz.question,
+          a: quiz.options.a,
+          b: quiz.options.b,
+          c: quiz.options.c,
+          d: quiz.options.d,
+          correctAnswer: quiz.correctAnswer
+        });
+      });
+  }
+
+  editQuiz = event => {
+    event.preventDefault();
+    fetch(`http://localhost:3000/api/v1/quiz/${this.props.question._id}`, {
       method: "PUT",
+      headers: {
+        "content-type": "application/json"
+      },
       body: JSON.stringify({
         question: this.state.question,
         options: {
@@ -38,21 +57,15 @@ class Quiz extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(quiz => {
-        if (quiz.success) {
+      .then(edited => {
+        console.log(edited, "called edited");
+        if (edited.success) {
+          this.props.history.push("/dashboard");
         }
       });
   };
-  getSingleQuestionById = () => {
-    fetch(`http://localhost:3000/api/v1/quiz/${this.props.id}`)
-      .then(res => res.json())
-      .then(singleQuiz => this.setState({ singleQuiz }));
-  };
 
   render() {
-    {
-      () => this.getSingleQuestionById(this.props.id);
-    }
     return (
       <>
         <div className="quiz">
@@ -63,6 +76,7 @@ class Quiz extends React.Component {
               className="create-quiz-input"
               placeholder="Question"
               name="question"
+              value={this.state.question}
               onChange={this.handleChange}
             ></input>
             <div>
@@ -71,6 +85,7 @@ class Quiz extends React.Component {
                 className="create-quiz-input"
                 placeholder="Option (a)"
                 name="a"
+                value={this.state.a}
                 onChange={this.handleChange}
               ></input>
               <input
@@ -78,6 +93,7 @@ class Quiz extends React.Component {
                 className="create-quiz-input"
                 placeholder="Option (b)"
                 name="b"
+                value={this.state.b}
                 onChange={this.handleChange}
               ></input>
               <input
@@ -85,6 +101,7 @@ class Quiz extends React.Component {
                 className="create-quiz-input"
                 placeholder="Option (c)"
                 name="c"
+                value={this.state.c}
                 onChange={this.handleChange}
               ></input>
               <input
@@ -92,6 +109,7 @@ class Quiz extends React.Component {
                 className="create-quiz-input"
                 placeholder="Option (d)"
                 name="d"
+                value={this.state.d}
                 onChange={this.handleChange}
               ></input>
             </div>
@@ -100,6 +118,7 @@ class Quiz extends React.Component {
               className="create-quiz-input"
               placeholder="Correct Answer"
               name="correctAnswer"
+              value={this.state.correctAnswer}
               onChange={this.handleChange}
             ></input>
             <button type="submit">Update</button>

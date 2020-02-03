@@ -26,6 +26,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 //create quiz
+
 router.post("/create", function(req, res, next) {
   console.log(req.body, "inside crate quiz route");
   Quiz.create(req.body, (err, createdQuiz) => {

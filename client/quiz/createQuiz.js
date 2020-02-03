@@ -42,7 +42,7 @@ class Quiz extends React.Component {
       .then(quiz => {
         console.log(quiz);
         if (quiz.success) {
-          this.props.history.push("/admin/dashboard");
+          this.props.history.push("/dashboard");
         }
       });
   };
