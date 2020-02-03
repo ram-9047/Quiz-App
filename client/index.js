@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
+import Store from "./store/index";
 import "../stylesheets/reset.css";
 
 import Homepage from "./homepage/homepage.js";
@@ -97,4 +99,9 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <Provider store={Store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
