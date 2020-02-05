@@ -9,32 +9,36 @@ class AdminLogIn extends React.Component {
   }
 
   handleChange = event => {
-    console.log(event.target);
+    // console.log(event.target.name);
     this.setState({ [event.target.name]: event.target.value });
   };
   handleSignIn = () => {
-    let admin = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    fetch("http://localhost:3000/api/v1/admin/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "include",
-      body: JSON.stringify(admin)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          // console.log(data);
-          // console.log(data.authToken);
-          localStorage.setItem("token", data.authToken);
-          this.props.getLoggedUser();
-          this.props.history.push("/dashboard");
-        }
-      });
+    if (!this.state.email.includes("@")) {
+      alert("email is invalid");
+    } else {
+      let admin = {
+        email: this.state.email,
+        password: this.state.password
+      };
+      fetch("http://localhost:3000/api/v1/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(admin)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            // console.log(data);
+            // console.log(data.authToken);
+            localStorage.setItem("token", data.authToken);
+            this.props.getLoggedUser();
+            this.props.history.push("/dashboard");
+          }
+        });
+    }
   };
 
   render() {

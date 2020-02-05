@@ -20,14 +20,17 @@ class adminDashboard extends React.Component {
       .then(res => res.json())
       .then(quiz => {
         if (quiz.success) {
-          this.getQuiz();
-          this.props.history.push("/admin/dashboard");
+          console.log(quiz);
+          this.componentDidMount();
         }
       });
   };
 
-  correctAnswer = (event, option, answer) => {
-    if (option == answer) {
+  answer = (event, option, answer) => {
+    if (option !== answer) {
+      alert("Wrong answer");
+    } else {
+      alert("correct answer");
       event.target.parentElement.className = "disable";
       this.setState({ score: ++this.state.score });
     }
@@ -55,28 +58,28 @@ class adminDashboard extends React.Component {
                   <p>{quiz.question}</p>
                   <span
                     onClick={e =>
-                      this.correctAnswer(e, quiz.options.a, quiz.correctAnswer)
+                      this.answer(e, quiz.options.a, quiz.correctAnswer)
                     }
                   >
                     (a) {quiz.options.a}
                   </span>
                   <span
                     onClick={e =>
-                      this.correctAnswer(e, quiz.options.b, quiz.correctAnswer)
+                      this.answer(e, quiz.options.b, quiz.correctAnswer)
                     }
                   >
                     (b) {quiz.options.b}
                   </span>
                   <span
                     onClick={e =>
-                      this.correctAnswer(e, quiz.options.c, quiz.correctAnswer)
+                      this.answer(e, quiz.options.c, quiz.correctAnswer)
                     }
                   >
                     (c) {quiz.options.c}
                   </span>
                   <span
                     onClick={e =>
-                      this.correctAnswer(e, quiz.options.d, quiz.correctAnswer)
+                      this.answer(e, quiz.options.d, quiz.correctAnswer)
                     }
                   >
                     (d) {quiz.options.d}
