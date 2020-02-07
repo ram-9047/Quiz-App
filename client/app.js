@@ -15,38 +15,7 @@ import EditQuiz from "./quiz/editQuiz.js";
 import Profile from "./profile/profile.js";
 
 class App extends Component {
-  state = {
-    // question: null,
-    // user: null,
-    // isLoggedIn: false
-  };
-
-  editQuiz = question => {
-    this.setState({
-      question
-    });
-  };
-
-  // getLoggedUser = () => {
-  //   fetch("http://localhost:3000/api/v1/user", {
-  //     headers: {
-  //       "content-type": "application/json",
-  //       authorization: localStorage.token
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(user => {
-  //       if (user.success) {
-  //         // console.log(user);
-  //         this.setState({ isLoggedIn: true });
-  //         this.setState({ user });
-  //       }
-  //     });
-  // };
-
-  //   componentDidMount() {
-  //     this.props.getLoggedInUser();
-  //   }
+  state = {};
 
   render() {
     // console.log(this.props);
@@ -65,13 +34,13 @@ class App extends Component {
             <Route path="/admin/signup" component={AdminSignup} />
             <Route path="/dashboard">
               <Dashboard
-                editQuiz={this.editQuiz}
-                // isLoggedIn={this.state.isLoggedIn}
-                isAdmin={
-                  this.props.users &&
-                  this.props.users.user &&
-                  this.props.users.user.isAdmin
-                }
+              // editQuiz={this.editQuiz}
+              // isLoggedIn={this.state.isLoggedIn}
+              // isAdmin={
+              //   this.props.users &&
+              //   this.props.users.user &&
+              //   this.props.users.user.isAdmin
+              // }
               />
             </Route>
             <Route
@@ -84,16 +53,13 @@ class App extends Component {
                   : null
               }
             />
-            <Route path="/edit">
-              {this.state.user && this.state.user.user.isAdmin ? (
-                <EditQuiz
-                  question={this.state.question}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              ) : (
-                ""
-              )}
-            </Route>
+            {this.props.users &&
+            this.props.users.user &&
+            this.props.users.user.isAdmin ? (
+              <Route path="/edit/:id" component={EditQuiz} />
+            ) : (
+              ""
+            )}
             <Route path="/profile">
               <Profile
                 user={this.state.user}

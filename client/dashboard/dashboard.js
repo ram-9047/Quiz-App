@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import {
   fetchQuizzes,
   getLoggedInUser,
-  deleteOneQuestion
+  deleteOneQuestion,
+  getOneQuestion
 } from "../actions/index";
 import "../../stylesheets/dashboard.css";
 
@@ -14,8 +15,8 @@ class adminDashboard extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getLoggedInUser();
-    this.props.fetchQuizzes();
+    this.props.dispatch(getLoggedInUser());
+    this.props.dispatch(fetchQuizzes());
   }
 
   answer = (event, option, answer) => {
@@ -29,7 +30,7 @@ class adminDashboard extends React.Component {
   };
 
   render() {
-    // console.log(this.props);
+    // console.log(this.props, "MN");
     return this.props.users.isLoggedIn ? (
       <>
         <div className="flex dashboard">
@@ -90,17 +91,25 @@ class adminDashboard extends React.Component {
                   )}
                   {this.props.users.user.isAdmin ? (
                     <div className="question-box-btn">
-                      <Link to="/edit">
+                      <Link to={`/edit/${quiz._id}`}>
                         <button
                           className="edit-btn"
-                          onClick={() => this.props.editQuiz(quiz)}
+                          onClick={() =>
+                            this.props.dispatch(getOneQuestion(quiz._id))
+                          }
                         >
                           edit
                         </button>
                       </Link>
                       <button
                         className="edit-btn del-btn"
-                        onClick={() => this.props.deleteOneQuestion(quiz._id)}
+                        onClick={() =>
+                          this.props.dispatch(
+                            deleteOneQuestion(quiz._id, () => {
+                              this.props.history.push("/dashboard");
+                            })
+                          )
+                        }
                       >
                         delete
                       </button>
@@ -120,12 +129,8 @@ class adminDashboard extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state);
+  console.log(state, "MSTP");
   return state;
 }
 
-export default connect(mapStateToProps, {
-  fetchQuizzes,
-  getLoggedInUser,
-  deleteOneQuestion
-})(withRouter(adminDashboard));
+export default connect(mapStateToProps)(withRouter(adminDashboard));

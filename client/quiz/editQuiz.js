@@ -1,131 +1,115 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+import {
+  updateOneQuestion,
+  saveSingleQuestionInput
+} from "../actions/index.js";
 import "../../stylesheets/quiz.css";
 
 class Quiz extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      singleQuiz: [],
-      question: null,
-      a: null,
-      b: null,
-      c: null,
-      d: null,
-      correctAnswer: null
-    };
   }
   handleChange = event => {
-    this.setState({
+    console.log(event.target.value);
+    this.props.saveSingleQuestionInput({
       [event.target.name]: event.target.value
     });
   };
 
-  componentDidMount() {
-    fetch(`http://localhost:3000/api/v1/quiz/${this.props.question._id}`, {
-      method: "GET"
-    })
-      .then(res => res.json())
-      .then(quiz => {
-        this.setState({
-          question: quiz.question,
-          a: quiz.options.a,
-          b: quiz.options.b,
-          c: quiz.options.c,
-          d: quiz.options.d,
-          correctAnswer: quiz.correctAnswer
-        });
-      });
-  }
+  // componentDidMount() {}
 
   editQuiz = event => {
     event.preventDefault();
-    fetch(`http://localhost:3000/api/v1/quiz/${this.props.question._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        question: this.state.question,
-        options: {
-          a: this.state.a,
-          b: this.state.b,
-          c: this.state.c,
-          d: this.state.d
-        },
-        correctAnswer: this.state.correctAnswer
-      })
-    })
-      .then(res => res.json())
-      .then(edited => {
-        console.log(edited, "called edited");
-        if (edited.success) {
-          this.props.history.push("/dashboard");
-        }
-      });
+    this.props.updateOneQuestion(this.props.questions.singleQuestion, () => {
+      this.props.history.push("/dashboard");
+    });
   };
 
+  updateState = () => {
+    console.log(this.props);
+    this.setState({
+      question: this.props.questions.singleQuestion.question,
+      a: this.props.questions.singleQuestion.options.a,
+      b: this.props.questions.singleQuestion.options.b,
+      c: this.props.questions.singleQuestion.options.c,
+      d: this.props.questions.singleQuestion.options.d,
+      correctAnswer: this.props.questions.singleQuestion.correctAnswer
+    });
+  };
   render() {
-    return (
-      <>
-        <div className="quiz">
-          <span>Edit Quiz</span>
-          <form onSubmit={this.editQuiz}>
-            <input
-              type="text"
-              className="create-quiz-input"
-              placeholder="Question"
-              name="question"
-              value={this.state.question}
-              onChange={this.handleChange}
-            ></input>
-            <div>
+    console.log(this.props, "edit question ");
+    if (this.props.questions && this.props.questions.singleQuestion) {
+      return (
+        <>
+          {/* <h1>edit question page</h1> */}
+          <div className="quiz">
+            <span>Edit Quiz</span>
+            <form onSubmit={this.editQuiz}>
               <input
                 type="text"
                 className="create-quiz-input"
-                placeholder="Option (a)"
-                name="a"
-                value={this.state.a}
+                placeholder="Question"
+                name="question"
+                value={this.props.questions.singleQuestion.question}
                 onChange={this.handleChange}
               ></input>
+              <div>
+                <input
+                  type="text"
+                  className="create-quiz-input"
+                  placeholder="Option (a)"
+                  name="a"
+                  value={this.props.questions.singleQuestion.a}
+                  onChange={this.handleChange}
+                ></input>
+                <input
+                  type="text"
+                  className="create-quiz-input"
+                  placeholder="Option (b)"
+                  name="b"
+                  value={this.props.questions.singleQuestion.b}
+                  onChange={this.handleChange}
+                ></input>
+                <input
+                  type="text"
+                  className="create-quiz-input"
+                  placeholder="Option (c)"
+                  name="c"
+                  value={this.props.questions.singleQuestion.c}
+                  onChange={this.handleChange}
+                ></input>
+                <input
+                  type="text"
+                  className="create-quiz-input"
+                  placeholder="Option (d)"
+                  name="d"
+                  value={this.props.questions.singleQuestion.d}
+                  onChange={this.handleChange}
+                ></input>
+              </div>
               <input
                 type="text"
                 className="create-quiz-input"
-                placeholder="Option (b)"
-                name="b"
-                value={this.state.b}
+                placeholder="Correct Answer"
+                name="correctAnswer"
+                value={this.props.questions.singleQuestion.correctAnswer}
                 onChange={this.handleChange}
               ></input>
-              <input
-                type="text"
-                className="create-quiz-input"
-                placeholder="Option (c)"
-                name="c"
-                value={this.state.c}
-                onChange={this.handleChange}
-              ></input>
-              <input
-                type="text"
-                className="create-quiz-input"
-                placeholder="Option (d)"
-                name="d"
-                value={this.state.d}
-                onChange={this.handleChange}
-              ></input>
-            </div>
-            <input
-              type="text"
-              className="create-quiz-input"
-              placeholder="Correct Answer"
-              name="correctAnswer"
-              value={this.state.correctAnswer}
-              onChange={this.handleChange}
-            ></input>
-            <button type="submit">Update</button>
-          </form>
-        </div>
-      </>
-    );
+              <button type="submit">Update</button>
+            </form>
+          </div>
+        </>
+      );
+    } else return <div>Loading...</div>;
   }
 }
-export default withRouter(Quiz);
+function mapStateToProps(state) {
+  return state;
+}
+export default connect(mapStateToProps, {
+  updateOneQuestion,
+  saveSingleQuestionInput
+})(withRouter(Quiz));
