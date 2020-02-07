@@ -9,7 +9,7 @@ let indexRouter = require("./routes/index");
 let usersRouter = require("./routes/api/users");
 let adminRouter = require("./routes/api/admin");
 let quizzesRouter = require("./routes/api/quiz");
-let userDashboard = require("./routes/api/currentLogged");
+let currentUser = require("./routes/api/currentLogged");
 
 let app = express();
 
@@ -49,7 +49,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/quiz", quizzesRouter);
-app.use("/api/v1/dashboard", userDashboard);
+app.use("/api/v1/user", currentUser);
 app.use("*", indexRouter);
 
 // catch 404 and forward to error handler

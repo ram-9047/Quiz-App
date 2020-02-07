@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import { getLoggedInUser } from "../actions/index";
 import "../../stylesheets/LogIn.css";
 
 class AdminLogIn extends React.Component {
@@ -31,10 +33,8 @@ class AdminLogIn extends React.Component {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            // console.log(data);
-            // console.log(data.authToken);
             localStorage.setItem("token", data.authToken);
-            this.props.getLoggedUser();
+            this.props.dispatch(getLoggedInUser());
             this.props.history.push("/dashboard");
           }
         });
@@ -42,7 +42,7 @@ class AdminLogIn extends React.Component {
   };
 
   render() {
-    console.log(this.props.getLoggedUser);
+    // console.log(this.props);
     return (
       <div>
         <div className="wrapper">
@@ -93,4 +93,8 @@ class AdminLogIn extends React.Component {
   }
 }
 
-export default withRouter(AdminLogIn);
+function mapStateToProps(state) {
+  return { state };
+}
+
+export default connect(mapStateToProps)(withRouter(AdminLogIn));

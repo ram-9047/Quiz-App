@@ -1,18 +1,24 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { createOneQuestion } from "../actions/index";
 import "../../stylesheets/quiz.css";
 
 class Quiz extends React.Component {
-  state = {
-    question: null,
+  constructor() {
+    super();
+    this.state = {
+      question: null,
 
-    a: null,
-    b: null,
-    c: null,
-    d: null,
+      a: null,
+      b: null,
+      c: null,
+      d: null,
 
-    correctAnswer: null
-  };
+      correctAnswer: null
+    };
+  }
 
   handleChange = event => {
     this.setState({
@@ -20,38 +26,19 @@ class Quiz extends React.Component {
     });
   };
 
-  createQuiz = event => {
-    event.preventDefault();
-    fetch("http://localhost:3000/api/v1/quiz/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        question: this.state.question,
-        options: {
-          a: this.state.a,
-          b: this.state.b,
-          c: this.state.c,
-          d: this.state.d
-        },
-        correctAnswer: this.state.correctAnswer
-      })
-    })
-      .then(res => res.json())
-      .then(quiz => {
-        console.log(quiz);
-        if (quiz.success) {
-          this.props.history.push("/dashboard");
-        }
-      });
-  };
   render() {
+    // console.log(this.props);
     return (
       <>
         <div className="quiz">
           <span>Create Quiz</span>
-          <form onSubmit={this.createQuiz}>
+          <form
+            onSubmit={() =>
+              this.props.createOneQuestion(this.state, () => {
+                this.props.history.push("/dashboard");
+              })
+            }
+          >
             <input
               type="text"
               className="create-quiz-input"
@@ -103,4 +90,10 @@ class Quiz extends React.Component {
     );
   }
 }
-export default withRouter(Quiz);
+function mapStateToProps(state) {
+  // console.log(state);
+  return state;
+}
+export default connect(mapStateToProps, { createOneQuestion })(
+  withRouter(Quiz)
+);

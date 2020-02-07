@@ -1,7 +1,11 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchQuizzes } from "../actions/index";
+import {
+  fetchQuizzes,
+  getLoggedInUser,
+  deleteOneQuestion
+} from "../actions/index";
 import "../../stylesheets/dashboard.css";
 
 class adminDashboard extends React.Component {
@@ -10,21 +14,9 @@ class adminDashboard extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(fetchQuizzes());
+    this.props.getLoggedInUser();
+    this.props.fetchQuizzes();
   }
-
-  deleteQuiz = id => {
-    fetch(`http://localhost:3000/api/v1/quiz/${id}`, {
-      method: "DELETE"
-    })
-      .then(res => res.json())
-      .then(quiz => {
-        if (quiz.success) {
-          console.log(quiz);
-          this.componentDidMount();
-        }
-      });
-  };
 
   answer = (event, option, answer) => {
     if (option !== answer) {
@@ -38,21 +30,25 @@ class adminDashboard extends React.Component {
 
   render() {
     // console.log(this.props);
-    return this.props.isLoggedIn ? (
+    return this.props.users.isLoggedIn ? (
       <>
         <div className="flex dashboard">
           <span>Quiz App</span>
           <span>Score : {this.state.score}</span>
           <nav className="nav-bar">
-            {this.props.isAdmin ? <Link to="/create">Create Quiz</Link> : ""}
+            {this.props.users.user.isAdmin ? (
+              <Link to="/create">Create Quiz</Link>
+            ) : (
+              ""
+            )}
 
             <Link to="/profile">Profile</Link>
           </nav>
         </div>
         <div className="question-list">
           <h3>List of Questions</h3>
-          {this.props.questions &&
-            this.props.questions.quiz.map(quiz => (
+          {this.props.questions.quizzes &&
+            this.props.questions.quizzes.quiz.map(quiz => (
               <div>
                 <div className="question-box">
                   <p>{quiz.question}</p>
@@ -84,7 +80,7 @@ class adminDashboard extends React.Component {
                   >
                     (d) {quiz.options.d}
                   </span>
-                  {this.props.isAdmin ? (
+                  {this.props.users.user.isAdmin ? (
                     <>
                       <p>Correct Answer</p>
                       <span>{quiz.correctAnswer}</span>
@@ -92,7 +88,7 @@ class adminDashboard extends React.Component {
                   ) : (
                     ""
                   )}
-                  {this.props.isAdmin ? (
+                  {this.props.users.user.isAdmin ? (
                     <div className="question-box-btn">
                       <Link to="/edit">
                         <button
@@ -104,7 +100,7 @@ class adminDashboard extends React.Component {
                       </Link>
                       <button
                         className="edit-btn del-btn"
-                        onClick={() => this.deleteQuiz(quiz._id)}
+                        onClick={() => this.props.deleteOneQuestion(quiz._id)}
                       >
                         delete
                       </button>
@@ -124,7 +120,12 @@ class adminDashboard extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { questions: state.questions.quizzes };
+  // console.log(state);
+  return state;
 }
 
-export default connect(mapStateToProps)(withRouter(adminDashboard));
+export default connect(mapStateToProps, {
+  fetchQuizzes,
+  getLoggedInUser,
+  deleteOneQuestion
+})(withRouter(adminDashboard));
